@@ -1,12 +1,12 @@
 // Package baseconverter converts any number from an arbitrary base to another arbitrary base.
-// From binary up to base62. Not only from base2 to base36 like in standard library. The package
-// also contains two additional functions to convert from an arbitrary base to decimal and from
-// decimal to an arbitrary base.
+// From binary up to base62. Not only from base2 to base36 like in standard library. This package
+// can work with numbers bigger than int64. It also contains two additional functions to convert
+// from an arbitrary base to decimal and from decimal to an arbitrary base.
 package baseconverter
 
 import (
 	"fmt"
-	"math"
+	"math/big"
 	"strconv"
 )
 
@@ -31,7 +31,7 @@ func Conversion(toConv string, fromBase, toBase int) (string, error) {
 	return newBaseNum, nil
 }
 
-// ConvertToDec converts an arbitrary base number to decimal base number.
+// ConvertToDec converts an arbitrary base number to decimal base number larger than int64.
 func ConvertToDec(numS string, fromBase int) (string, error) {
 	if fromBase < 2 {
 		return "", fmt.Errorf("Invalid base: %v", fromBase)
@@ -47,25 +47,33 @@ func ConvertToDec(numS string, fromBase int) (string, error) {
 		num = append(num[1:])
 	}
 
-	// Converting the number to decimal base.
-	var decNum int64
+	// Converting the number to decimal base using math/big library in order to get
+	// numbers bigger than int64.
+	bDecNum := big.NewInt(0)
 	iFromEnd := len(num) - 1
 	for _, vRune := range num {
 		vInt, err := letterToNum(vRune, fromBase)
 		if err != nil {
 			return "", err
 		}
-		decNum += int64(vInt) * int64(math.Pow(float64(fromBase), float64(iFromEnd)))
+		bVint := big.NewInt(int64(vInt))
+		bFromBase := big.NewInt(int64(fromBase))
+		bIfromEnd := big.NewInt(int64(iFromEnd))
+		bPow := big.NewInt(0)
+		mod := big.NewInt(0)
+		bRight := big.NewInt(0)
+		bDecNum.Add(bDecNum, bRight.Mul(bPow.Exp(bFromBase, bIfromEnd, mod), bVint))
 		iFromEnd--
 	}
 	if flagNeg == 1 {
-		decNum *= -1
+		// If original number was negative - making new one negative too.
+		bDecNum.Neg(bDecNum)
 	}
 
-	return fmt.Sprint(decNum), nil
+	return bDecNum.String(), nil
 }
 
-// ConvertFromDec converts decimal base number to an arbitrary base number.
+// ConvertFromDec converts decimal base number (larger than int64) to an arbitrary base number.
 func ConvertFromDec(numS string, toBase int) (string, error) {
 	if toBase < 2 {
 		return "", fmt.Errorf("Invalid base: %v", toBase)
@@ -73,26 +81,29 @@ func ConvertFromDec(numS string, toBase int) (string, error) {
 	if numS == "" {
 		return "", fmt.Errorf("Nothing to convert")
 	}
-	// Converting string to int64
-	num, err := strconv.ParseInt(numS, 10, 64)
-	if err != nil {
+	// Converting string to the number bigger than int64
+	bNum := big.NewInt(0)
+	bNum, ok := bNum.SetString(numS, 10)
+	if ok != true {
 		return "", fmt.Errorf("Invalid number: %v", numS)
 	}
+	bZero := big.NewInt(0)
 	// If original number is equal to "0...0".
-	if num == 0 {
+	if bNum.Cmp(bZero) == 0 {
 		return "0", nil
 	}
 	// If the number is negativ: flagNeg = 1 and "saving" the negative sign.
-	if num < 0 {
+	if bNum.Cmp(bZero) == -1 {
 		flagNeg = 1
-		num *= -1
+		bNum.Neg(bNum)
 	}
 	// Converting the number to needed base (toBase).
 	var newNum string
-	for num != 0 {
-		reminder := num % int64(toBase)
-		num = num / int64(toBase)
-		reminderHex := numToLetter(reminder, toBase)
+	bToBase := big.NewInt(int64(toBase))
+	bReminder := big.NewInt(0)
+	for bNum.Cmp(bZero) != 0 {
+		bNum.DivMod(bNum, bToBase, bReminder)
+		reminderHex := numToLetter(bReminder.Int64(), toBase)
 		newNum += reminderHex
 	}
 
@@ -114,7 +125,7 @@ func ConvertFromDec(numS string, toBase int) (string, error) {
 	return string(numRunes), nil
 }
 
-// letterToNum converts rune(it can be digit(0-9) or letter(a-z,A-Z) to int.
+// letterToNum converts rune(it can be digit(0-9) or letter(a-z,A-Z)) to int.
 func letterToNum(digit rune, base int) (int, error) {
 	if base > 10 {
 		for i, v := range allDigits[10:base] {

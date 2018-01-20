@@ -27,6 +27,16 @@ func TestConversion(t *testing.T) {
 		t.Error("Expected 110110100100000010010110101110111000,", "got ", num)
 	}
 
+	num, err = Conversion("11WTDjdhjfhishfsfte", 62, 10)
+	if num != "189016177912013109475714488654656" && err != nil {
+		t.Error("Expected 189016177912013109475714488654656,", "got ", num)
+	}
+
+	num, err = Conversion("7268762848224", 10, 5)
+	if num != "1423042411242120344" && err != nil {
+		t.Error("Expected 1423042411242120344,", "got ", num)
+	}
+
 	//Errors testing
 	_, err = Conversion("3334%", 10, 16)
 	if err == nil {
@@ -57,6 +67,10 @@ func TestConvertToDec(t *testing.T) {
 	if num != "-41437285" && err != nil {
 		t.Error("Expected -41437285,", "got ", num)
 	}
+	num, err = ConvertToDec("yttfatfdtafdfaaffa", 62)
+	if num != "101898408950105907990242686981400" && err != nil {
+		t.Error("Expected 101898408950105907990242686981400,", "got ", num)
+	}
 
 	//Errors testing
 	_, err = ConvertToDec("453$fa", 16)
@@ -83,6 +97,10 @@ func TestConvertFromDec(t *testing.T) {
 	if num != "1110000010001011" && err != nil {
 		t.Error("Expected 1110000010001011,", "got ", num)
 	}
+	num, err = ConvertFromDec("5748873492749774298749274987297497293", 16)
+	if num != "4533158c2869f3becb17fabb01be0cd" && err != nil {
+		t.Error("Expected 4533158c2869f3becb17fabb01be0cd,", "got ", num)
+	}
 
 	//Errors testing
 	_, err = ConvertFromDec("453$fa", 16)
@@ -106,9 +124,9 @@ func ExampleConversion() {
 }
 
 func ExampleConvertToDec() {
-	fmt.Println(ConvertToDec("453fa", 16))
+	fmt.Println(ConvertToDec("34784fadeffffaed5ffff", 16))
 	// Output:
-	// 283642
+	// 3964518526512789921857535
 }
 
 func ExampleConvertFromDec() {
