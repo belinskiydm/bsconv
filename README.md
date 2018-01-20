@@ -1,5 +1,5 @@
 # About baseconverter
-Go package to convert any number from an arbitrary base to another arbitrary base. From binary up to base62. Not only from base2 to base36 like in standard library. 
+Go package to convert any number from an arbitrary base to another arbitrary base. From binary up to base62.
 
 The package also contains two additional functions to convert from an arbitrary base to decimal and from decimal to an arbitrary base.
 
