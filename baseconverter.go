@@ -117,7 +117,7 @@ func ConvertFromDec(numS string, toBase int) (string, error) {
 // letterToNum converts rune(it can be digit(0-9) or letter(a-z,A-Z) to int.
 func letterToNum(digit rune, base int) (int, error) {
 	if base > 10 {
-		for i, v := range allDigits[10:] {
+		for i, v := range allDigits[10:base] {
 			if digit == v {
 				return i + 10, nil
 			}

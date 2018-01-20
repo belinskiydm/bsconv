@@ -17,5 +17,4 @@ func main() {
 	fmt.Println("Base10:", newNumBase10)
 	fmt.Println("Base16:", newNumBase16)
 	fmt.Println("Base20:", newNumBase20)
-
 }
