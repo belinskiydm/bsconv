@@ -1,7 +1,8 @@
-// Package baseconverter converts any number from an arbitrary base to another arbitrary base.
-// From binary up to base62. This package can work with numbers bigger than int64. It also contains two additional functions to convert
-// from an arbitrary base to decimal and from decimal to an arbitrary base.
-package baseconverter
+// Package bsconv converts any number from an arbitrary base to another arbitrary base.
+// From binary up to base62. This package can work with numbers bigger than int64. It also
+// contains two additional functions to convert from an arbitrary base to decimal and from
+// decimal to an arbitrary base.
+package bsconv
 
 import (
 	"fmt"
@@ -45,7 +46,10 @@ func ConvertToDec(numS string, fromBase int) (string, error) {
 		flagNeg = 1
 		num = append(num[1:])
 	}
-
+	// After removing "-" we have to check our number again.
+	if len(num) == 0 {
+		return "", fmt.Errorf("Nothing to convert")
+	}
 	// Converting the number to decimal base using math/big library in order to get
 	// numbers bigger than int64.
 	bDecNum := big.NewInt(0)
@@ -80,7 +84,7 @@ func ConvertFromDec(numS string, toBase int) (string, error) {
 	if numS == "" {
 		return "", fmt.Errorf("Nothing to convert")
 	}
-	// Converting string to the number bigger than int64
+	// Converting string to the number bigger than int64.
 	bNum := big.NewInt(0)
 	bNum, ok := bNum.SetString(numS, 10)
 	if ok != true {

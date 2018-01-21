@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/belinskiydm/baseconverter"
+	"github.com/belinskiydm/bsconv"
 )
 
 func main() {
@@ -11,10 +11,10 @@ func main() {
 	numBase10 := "674386482479820024"
 	numBase2 := "110101011110101110101010"
 	revNumBase10 := "2493771263131529637640109659423615368150832755252239"
-	newNumBase10, _ := baseconverter.ConvertToDec(numBase62, 62)
-	newNumBase16, _ := baseconverter.ConvertFromDec(numBase10, 16)
-	newNumBase20, _ := baseconverter.Conversion(numBase2, 2, 20)
-	newRevNumBase62, _ := baseconverter.ConvertFromDec(revNumBase10, 62)
+	newNumBase10, _ := bsconv.ConvertToDec(numBase62, 62)
+	newNumBase16, _ := bsconv.ConvertFromDec(numBase10, 16)
+	newNumBase20, _ := bsconv.Conversion(numBase2, 2, 20)
+	newRevNumBase62, _ := bsconv.ConvertFromDec(revNumBase10, 62)
 
 	fmt.Println("Base10:", newNumBase10)
 	fmt.Println("Base16:", newNumBase16)

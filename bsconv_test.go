@@ -1,4 +1,4 @@
-package baseconverter
+package bsconv
 
 import (
 	"fmt"
@@ -46,17 +46,19 @@ func TestConversion(t *testing.T) {
 	if err == nil {
 		t.Error("Expecting an error")
 	}
-	_, err = Conversion("", 1, 16)
+	_, err = Conversion("0101010", 1, 16)
 	if err == nil {
 		t.Error("Expecting an error")
 	}
-	_, err = Conversion("", 10, 0)
+	_, err = Conversion("6333737", 10, 0)
 	if err == nil {
 		t.Error("Expecting an error")
 	}
-
+	_, err = Conversion("-", 10, 2)
+	if err == nil {
+		t.Error("Expecting an error")
+	}
 }
-
 func TestConvertToDec(t *testing.T) {
 	//Correct result testing
 	num, err := ConvertToDec("453fa", 16)
@@ -82,6 +84,10 @@ func TestConvertToDec(t *testing.T) {
 		t.Error("Expecting an error")
 	}
 	_, err = ConvertToDec("", -1)
+	if err == nil {
+		t.Error("Expecting an error")
+	}
+	_, err = ConvertToDec("-", 10)
 	if err == nil {
 		t.Error("Expecting an error")
 	}
@@ -112,6 +118,10 @@ func TestConvertFromDec(t *testing.T) {
 		t.Error("Expecting an error")
 	}
 	_, err = ConvertFromDec("", 1)
+	if err == nil {
+		t.Error("Expecting an error")
+	}
+	_, err = ConvertFromDec("-", 16)
 	if err == nil {
 		t.Error("Expecting an error")
 	}
