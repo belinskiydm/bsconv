@@ -3,7 +3,9 @@ Golang package to convert any number from an arbitrary base to another arbitrary
 
 The package also contains two additional functions to convert from an arbitrary base to decimal and from decimal to an arbitrary base.
 
-All functions get and return numbers in the format of string. 
+All functions get and return numbers in the format of string.
+
+Link to the [GoDoc API page](https://godoc.org/github.com/belinskiydm/bsconv).
 
 ## Installation ##
 
