@@ -1,11 +1,9 @@
-# About bsconv
+# About bsconv [![GoDoc](https://godoc.org/github.com/belinskiydm/bsconv?status.svg)](https://godoc.org/github.com/belinskiydm/bsconv) #
 Golang package to convert any number from an arbitrary base to another arbitrary base. From binary up to base62. This package can work with numbers bigger than int64.
 
 The package also contains two additional functions to convert from an arbitrary base to decimal and from decimal to an arbitrary base.
 
 All functions get and return numbers in the format of string.
-
-Link to the [GoDoc API page](https://godoc.org/github.com/belinskiydm/bsconv).
 
 ## Installation ##
 
