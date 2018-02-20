@@ -8,32 +8,32 @@ import (
 func TestConversion(t *testing.T) {
 	//Correct result testing
 	num, err := Conversion("0", 2, 10)
-	if num != "0" && err != nil {
+	if num != "0" || err != nil {
 		t.Error("Expected 0,", "got ", num)
 	}
 
 	num, err = Conversion("56f", 16, 2)
-	if num != "10101101111" && err != nil {
+	if num != "10101101111" || err != nil {
 		t.Error("Expected 10101101111,", "got ", num)
 	}
 
 	num, err = Conversion("-58586655672", 10, 62)
-	if num != "-11WTDte" && err != nil {
+	if num != "-11WTDte" || err != nil {
 		t.Error("Expected -11WTDte,", "got ", num)
 	}
 
 	num, err = Conversion("11WTDte", 62, 2)
-	if num != "110110100100000010010110101110111000" && err != nil {
+	if num != "110110100100000010010110101110111000" || err != nil {
 		t.Error("Expected 110110100100000010010110101110111000,", "got ", num)
 	}
 
 	num, err = Conversion("11WTDjdhjfhishfsfte", 62, 10)
-	if num != "189016177912013109475714488654656" && err != nil {
+	if num != "189016177912013109475714488654656" || err != nil {
 		t.Error("Expected 189016177912013109475714488654656,", "got ", num)
 	}
 
 	num, err = Conversion("7268762848224", 10, 5)
-	if num != "1423042411242120344" && err != nil {
+	if num != "1423042411242120344" || err != nil {
 		t.Error("Expected 1423042411242120344,", "got ", num)
 	}
 
@@ -62,16 +62,12 @@ func TestConversion(t *testing.T) {
 func TestConvertToDec(t *testing.T) {
 	//Correct result testing
 	num, err := ConvertToDec("453fa", 16)
-	if num != "283642" && err != nil {
+	if num != "283642" || err != nil {
 		t.Error("Expected 283642,", "got ", num)
 	}
 	num, err = ConvertToDec("-4t3fa", 55)
-	if num != "-41437285" && err != nil {
+	if num != "-41437285" || err != nil {
 		t.Error("Expected -41437285,", "got ", num)
-	}
-	num, err = ConvertToDec("yttfatfdtafdfaaffa", 62)
-	if num != "101898408950105907990242686981400" && err != nil {
-		t.Error("Expected 101898408950105907990242686981400,", "got ", num)
 	}
 
 	//Errors testing
@@ -96,15 +92,15 @@ func TestConvertToDec(t *testing.T) {
 func TestConvertFromDec(t *testing.T) {
 	//Correct result testing
 	num, err := ConvertFromDec("-6455537849492", 62)
-	if num != "-1PEvwVPC" && err != nil {
+	if num != "-1PEvwVPC" || err != nil {
 		t.Error("Expected -1PEvwVPC,", "got ", num)
 	}
 	num, err = ConvertFromDec("57483", 2)
-	if num != "1110000010001011" && err != nil {
+	if num != "1110000010001011" || err != nil {
 		t.Error("Expected 1110000010001011,", "got ", num)
 	}
 	num, err = ConvertFromDec("5748873492749774298749274987297497293", 16)
-	if num != "4533158c2869f3becb17fabb01be0cd" && err != nil {
+	if num != "4533158c2869f3becb17fabb01be0cd" || err != nil {
 		t.Error("Expected 4533158c2869f3becb17fabb01be0cd,", "got ", num)
 	}
 
