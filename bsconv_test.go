@@ -54,7 +54,7 @@ func TestConversion(t *testing.T) {
 	if err == nil {
 		t.Error("Expecting an error")
 	}
-	_, err = Conversion("-", 10, 2)
+	_, err = Conversion(".", 10, 2)
 	if err == nil {
 		t.Error("Expecting an error")
 	}
